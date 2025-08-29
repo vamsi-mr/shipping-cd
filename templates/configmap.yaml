@@ -1,0 +1,13 @@
+### ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: shipping
+  namespace: roboshop
+  labels:
+    component: shipping
+    project: roboshop
+    tier: app
+data:
+  CART_ENDPOINT: "cart:8080" 
+  DB_HOST: "mysql"

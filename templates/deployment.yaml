@@ -1,0 +1,40 @@
+### Deployment
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: shipping
+  namespace: roboshop
+  labels:
+    component: shipping
+    project: roboshop
+    tier: app
+spec:
+  selector:
+    matchLabels:
+      component: shipping
+      project: roboshop
+      tier: app
+  replicas: 2
+  ### This is Pod definiton
+  template:
+    metadata:
+      name: shipping
+      labels:
+        component: shipping
+        project: roboshop
+        tier: app
+    spec:
+      containers:
+      - name: shipping
+        image: {{ .Values.deployment.imageURL }}:{{ .Values.deployment.imageVersion }}
+        #command: ["sh", "-c", "echo 'failure' && exit 1"]
+        envFrom:
+        - configMapRef:
+            name: shipping
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
